@@ -1,0 +1,78 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX uri: <http://www.semanticweb.org/football/ontologies#>
+
+SELECT ?players ?goals
+WHERE {
+  ?players uri:goals_overall ?goals.
+}
+ORDER BY DESC(xsd:int(?goals))
+LIMIT 10
+-----------------------------------------------------------------
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX uri: <http://www.semanticweb.org/football/ontologies#>
+
+SELECT ?players
+WHERE {
+  ?players uri:nationality "France"
+}
+------------------------------------------------------------------
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX uri: <http://www.semanticweb.org/football/ontologies#>
+
+SELECT ?players ?teams
+WHERE {
+  ?players uri:hasTeam ?teams.
+  ?teams uri:team_name "Arsenal FC"
+}
+---
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX uri: <http://www.semanticweb.org/football/ontologies#>
+
+SELECT ?players
+WHERE {
+  ?players uri:Current_Club "Arsenal".
+}
+------------------------------------------------------------------
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX uri: <http://www.semanticweb.org/football/ontologies#>
+
+SELECT ?matches
+WHERE {
+  ?matches uri:referee "Anthony Taylor"
+}
+------------------------------------------------------------------
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX uri: <http://www.semanticweb.org/football/ontologies#>
+
+SELECT ?matches ?Arsenal_goals ?otherTeam_goals
+WHERE {
+  {
+  ?matches uri:home_team_name "Arsenal".
+  ?matches uri:home_team_goal_count ?Arsenal_goals.
+  ?matches uri:away_team_goal_count ?otherTeam_goals.
+  }
+  union
+  {
+    ?matches uri:away_team_name "Arsenal".
+  	?matches uri:home_team_goal_count ?otherTeam_goals.
+  	?matches uri:away_team_goal_count ?Arsenal_goals.
+  }
+}
